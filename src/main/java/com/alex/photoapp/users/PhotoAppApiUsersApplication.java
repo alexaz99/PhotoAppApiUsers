@@ -2,8 +2,20 @@ package com.alex.photoapp.users;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
+/**
+ * this will make this application a client of a Eureka discover service.
+ * Also add some stuff in app.properties (see the properties file)
+ *
+ * This application PhotoAppApiUsersApplication and
+ *  * PhotoAppApiAccountManagementApplication are both clients for EnableDiscoveryClient (Eureka server => PhotoAppDiscoveryServiceApplication )
+ *
+ * 1. First start Eureka Discovery server ( PhotoAppDiscoveryServiceApplication.java app)
+ * 		Open a browser and type => http://localhost:8010
+ */
 @SpringBootApplication
+@EnableDiscoveryClient
 public class PhotoAppApiUsersApplication {
 
 	public static void main(String[] args) {
