@@ -13,6 +13,10 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  *
  * 1. First start Eureka Discovery server ( PhotoAppDiscoveryServiceApplication.java app)
  * 		Open a browser and type => http://localhost:8010
+ *
+ * 	To run SpringBoot application from a command line using maven
+ * 	-------------------------------------
+ * 	mvn spring-boot:run -Dspring-boot.run.arguments=--spring.application.instance-id=Alex
  */
 @SpringBootApplication
 @EnableDiscoveryClient
