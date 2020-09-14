@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/users")
 public class UsersController {
@@ -26,7 +28,7 @@ public class UsersController {
     }
 
     @PostMapping
-    public String createUser(@RequestBody CreateUserRequestModel userDEtails) {
+    public String createUser(@Valid @RequestBody CreateUserRequestModel userDetails) {
         return "Create user method is called";
     }
 }
