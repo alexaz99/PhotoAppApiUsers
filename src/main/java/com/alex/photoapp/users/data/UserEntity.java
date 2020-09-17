@@ -1,23 +1,49 @@
-package com.alex.photoapp.users.shared;
+package com.alex.photoapp.users.data;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
- * If use UserDto need to implements Serializable
+ * @see com.alex.photoapp.users.shared.UserDto
  */
-public class UserDto implements Serializable {
+@Entity
+@Table(name = "users")
+public class UserEntity implements Serializable {
 
-    private static final long serialVersionUID = -4124749854611182940L;
+    private static final long serialVersionUID = -1991792057938041766L;
 
+    // unique for internal DB ID, auto generated
+    @Id
+    @GeneratedValue
+    private long id;
+
+    // below are the same as UserDto
+    @Column(nullable = false, length = 50)
     private String firstName;
+
+    @Column(nullable = false, length = 50)
     private String lastName;
-    private String password;
+
+    @Column(nullable = false, length = 120, unique = true)
     private String email;
+
+    // no plain password should be stored, delete this field,
+    // only encrypted password should be stored.
+    // String password;
+
+    @Column(nullable = false, unique = true)
     private String userId;
+
+    @Column(nullable = false, unique = true)
     private String encryptedPassword;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -33,14 +59,6 @@ public class UserDto implements Serializable {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getEmail() {

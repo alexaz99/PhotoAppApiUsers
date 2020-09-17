@@ -26,4 +26,5 @@ public class PhotoAppApiUsersApplication {
 		SpringApplication.run(PhotoAppApiUsersApplication.class, args);
 	}
 
+
 }

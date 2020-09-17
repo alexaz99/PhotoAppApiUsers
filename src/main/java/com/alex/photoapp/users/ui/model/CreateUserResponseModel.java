@@ -1,23 +1,18 @@
-package com.alex.photoapp.users.shared;
+package com.alex.photoapp.users.ui.model;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
 
 /**
- * If use UserDto need to implements Serializable
+ * The object that is return to the REST user of the call
+ * inside ResponseEntity in Http Response body
  */
-public class UserDto implements Serializable {
-
-    private static final long serialVersionUID = -4124749854611182940L;
-
+public class CreateUserResponseModel {
     private String firstName;
     private String lastName;
-    private String password;
     private String email;
     private String userId;
-    private String encryptedPassword;
 
     public String getFirstName() {
         return firstName;
@@ -35,14 +30,6 @@ public class UserDto implements Serializable {
         this.lastName = lastName;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -57,13 +44,5 @@ public class UserDto implements Serializable {
 
     public void setUserId(String userId) {
         this.userId = userId;
-    }
-
-    public String getEncryptedPassword() {
-        return encryptedPassword;
-    }
-
-    public void setEncryptedPassword(String encryptedPassword) {
-        this.encryptedPassword = encryptedPassword;
     }
 }
