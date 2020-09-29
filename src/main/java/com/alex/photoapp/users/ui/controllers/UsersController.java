@@ -43,6 +43,7 @@ public class UsersController {
     }
 
     /**
+     * Create a new user with encoded password.
      * Always return ResponseEntity with the status and also a body if we need.
      * Adding support to return JSON (was by default) or XML
      * @param userDetails
@@ -68,7 +69,7 @@ public class UsersController {
 
         UserDto userDto = modelMapper.map(userDetails, UserDto.class);
 
-        // copy data using mapper and return to the user
+        // copy data using mapper and return to the encrypted user
         UserDto createUser = usersService.createUser(userDto);
         CreateUserResponseModel returnValue = modelMapper.map(createUser, CreateUserResponseModel.class);
 

@@ -31,7 +31,9 @@ public class UsersServiceImpl implements  UsersService {
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
     /**
-     * Constructor base dependencies injection
+     * Constructor base dependencies injection for UsersRepository & BCryptPasswordEncoder
+     * @see com.alex.photoapp.users.config.AppConfig that creates bean BCryptPasswordEncoder
+     *
      * @param usersRepository
      * @return
      */

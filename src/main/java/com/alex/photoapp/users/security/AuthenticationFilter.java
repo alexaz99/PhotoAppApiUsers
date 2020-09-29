@@ -102,6 +102,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         // add this generated token and set in response header token and userId
         // if user/pass authentication is correct
         response.addHeader("token", token);
+
         response.addHeader("userId", userDetails.getUserId());
 
     }

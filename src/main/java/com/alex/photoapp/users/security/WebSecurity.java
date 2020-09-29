@@ -18,6 +18,8 @@ import javax.servlet.Filter;
 
 /**
  * This is a configuration class where we define Spring Security Configuration
+ * Configure this WebSecurity to receive requests from only certain IP addresses!!
+ *
  * For now permit this HttpSecurity to send to the certain pass.
  *
  * 1. When a user sends an http request to perform a login, a custom filter will be triggered
@@ -48,12 +50,19 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         logger.info("WebSecurity Constructor => Zuul host address: {}", environment.getProperty("gateway.ip"));
     }
 
+    /**
+     * configure allow to configure and authorize Requests for all controller urls.
+     * excepts HttpSecurity object
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable(); // disable for now.
-        //http.authorizeRequests().antMatchers("/users/**").permitAll(); // this permit all
 
-        // how configure only to except from IP address of Zuul API Gateway
+        // this code permit all urls
+        //http.authorizeRequests().antMatchers("/users/**").permitAll();
+
+        // Configure this WebSecurity to receive requests from only certain IP addresses!!
+        // we configure only to accept reqursts from IP address of Zuul API Gateway only!!!
         logger.info("Zuul host address: {}", environment.getProperty("gateway.ip"));
         //http.authorizeRequests().antMatchers("/**").hasIpAddress(environment.getProperty("gateway.ip"));
 
@@ -66,9 +75,34 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         http.headers().frameOptions().disable(); // very important. head in order h2-console to work with spring security
     }
 
+    /**
+        Example with muptiple matches
+
+     @Override
+     protected void configure(HttpSecurity http) throws Exception {
+        http
+        .authorizeRequests()
+            .antMatchers("/static","/register").permitAll()
+            .antMatchers("/user/**").hasRoles("USER", "ADMIN") // can pass multiple roles
+            .antMatchers("/admin/**").access("hasRole('ADMIN') and hasIpAddress('123.123.123.123')") // pass SPEL using access method
+            .anyRequest().authenticated()
+            .and()
+        .formLogin()
+            .loginUrl("/login")
+            .permitAll();
+     }
+     */
+
     private AuthenticationFilter getAuthenticationFilter() throws Exception {
         AuthenticationFilter authenticationFilter = new AuthenticationFilter(usersService, environment, authenticationManager());
-        authenticationFilter.setAuthenticationManager(authenticationManager());
+        //authenticationFilter.setAuthenticationManager(authenticationManager());
+
+        // use spring default unless specified
+        // here we can create a custom URL pass to login user Authentication URL
+        // as parameter we can provide a custom url pass specified in application.properties file
+        // this is useful when we don't want to have a default URL pass but a custom one.
+        //authenticationFilter.setFilterProcessesUrl(environment.getProperty("login.url.path"));
+
         return authenticationFilter;
     }
 
