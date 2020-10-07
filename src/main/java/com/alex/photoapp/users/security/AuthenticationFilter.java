@@ -24,9 +24,11 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
- * Extends springframework.security.web.authentication class
- * When this filter is triggered during each login call
+ * This class is always triggered whe a user send a login request by user/pass
+ * This filter is registered with the WebSecurity and is triggered during each login call
  * this class will attempt to perform user Authentication
+ * Extends springframework.security.web.authentication class
+ * Need to be extends from UsernamePasswordAuthenticationFilter
  *
  * The idea is to a read user / password within this class and call an Authentication manager.
  * We should override attemptAuthentication method which will be called to check Authentication.
@@ -48,10 +50,11 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     }
 
     /**
-     * This method will be triggered when a user called
+     * This method will be triggered when a user called.
+     * Read user/pass from the request and do authentication against a DB record.
      * @param request
      * @param response
-     * @return
+     * @return Authentication
      * @throws AuthenticationException
      */
     @Override

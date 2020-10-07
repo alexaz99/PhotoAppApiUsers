@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,10 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.UUID;
 
+/**
+ * The method loadUserByUsername comes from UserDetailsService spring framework is called by Spring security framework.
+ * @see UserDetailsService that comes fron @see UsersService
+ */
 @Service
 public class UsersServiceImpl implements  UsersService {
 
@@ -70,7 +75,11 @@ public class UsersServiceImpl implements  UsersService {
     }
 
     /**
-     * This method comes from UserDetailsService spring framework
+     * This method comes from UserDetailsService spring framework is called by Spring security framework.
+     *
+     * This is were the Spring framework is trying to authonticate the user
+     * and will look for this method and will relay on this method to return
+     * user details from user name provided during login.
      */
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {

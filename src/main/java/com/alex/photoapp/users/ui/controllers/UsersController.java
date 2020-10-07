@@ -69,6 +69,7 @@ public class UsersController {
 
         UserDto userDto = modelMapper.map(userDetails, UserDto.class);
 
+        // call UsersServiceImpl
         // copy data using mapper and return to the encrypted user
         UserDto createUser = usersService.createUser(userDto);
         CreateUserResponseModel returnValue = modelMapper.map(createUser, CreateUserResponseModel.class);
