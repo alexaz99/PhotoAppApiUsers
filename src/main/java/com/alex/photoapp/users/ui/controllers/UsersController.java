@@ -17,6 +17,11 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+/**
+ * Login functionallity is running using
+ * http://localhost:8011/users-ws/login and the request is handling by WebSecurity java class
+ * and not using any Controller!
+ */
 @RestController
 @RequestMapping("/users")
 public class UsersController {

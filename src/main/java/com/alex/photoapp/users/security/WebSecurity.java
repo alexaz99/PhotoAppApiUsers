@@ -75,24 +75,6 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         http.headers().frameOptions().disable(); // very important. head in order h2-console to work with spring security
     }
 
-    /**
-        Example with muptiple matches
-
-     @Override
-     protected void configure(HttpSecurity http) throws Exception {
-        http
-        .authorizeRequests()
-            .antMatchers("/static","/register").permitAll()
-            .antMatchers("/user/**").hasRoles("USER", "ADMIN") // can pass multiple roles
-            .antMatchers("/admin/**").access("hasRole('ADMIN') and hasIpAddress('123.123.123.123')") // pass SPEL using access method
-            .anyRequest().authenticated()
-            .and()
-        .formLogin()
-            .loginUrl("/login")
-            .permitAll();
-     }
-     */
-
     private AuthenticationFilter getAuthenticationFilter() throws Exception {
         AuthenticationFilter authenticationFilter = new AuthenticationFilter(usersService, environment, authenticationManager());
         //authenticationFilter.setAuthenticationManager(authenticationManager());
@@ -101,7 +83,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         // here we can create a custom URL pass to login user Authentication URL
         // as parameter we can provide a custom url pass specified in application.properties file
         // this is useful when we don't want to have a default URL pass but a custom one.
-        //authenticationFilter.setFilterProcessesUrl(environment.getProperty("login.url.path"));
+        authenticationFilter.setFilterProcessesUrl(environment.getProperty("login.url.path"));
 
         return authenticationFilter;
     }
@@ -110,4 +92,22 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(usersService).passwordEncoder(bCryptPasswordEncoder);
     }
+
+    /**
+     Example with muptiple matches
+
+     @Override
+     protected void configure(HttpSecurity http) throws Exception {
+     http
+     .authorizeRequests()
+     .antMatchers("/static","/register").permitAll()
+     .antMatchers("/user/**").hasRoles("USER", "ADMIN") // can pass multiple roles
+     .antMatchers("/admin/**").access("hasRole('ADMIN') and hasIpAddress('123.123.123.123')") // pass SPEL using access method
+     .anyRequest().authenticated()
+     .and()
+     .formLogin()
+     .loginUrl("/login")
+     .permitAll();
+     }
+     */
 }

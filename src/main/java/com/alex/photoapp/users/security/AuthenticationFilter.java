@@ -67,11 +67,6 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
             return getAuthenticationManager().authenticate(
                     new UsernamePasswordAuthenticationToken(creds.getEmail(), creds.getPassword(), new ArrayList<>())
             );
-            // comment handling those exceptions because they are the children of IOException
-/*        } catch (JsonParseException e) {
-            e.printStackTrace();
-        } catch (JsonMappingException e) {
-            e.printStackTrace();*/
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -79,6 +74,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     /**
      * If Authentication is successful in attemptAuthentication call, this method is called by a Spring framework.
+     * This call from HTTP layer that passes request & response objects
      *
      * This method takes user details and generates GWT token and adds this GWT token to response header and
      * returns it back with HTTP response. And the client will use this GWT token and use it in subsequent
