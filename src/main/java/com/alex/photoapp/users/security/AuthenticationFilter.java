@@ -6,6 +6,8 @@ import com.alex.photoapp.users.ui.model.LoginUserRequestModel;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -38,6 +40,8 @@ import java.util.Date;
  */
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
+    private static Logger logger = LoggerFactory.getLogger(AuthenticationFilter.class);
+
     private UsersService usersService;
     private Environment environment;
 
@@ -60,12 +64,16 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {
+            logger.info("Received HttpServletRequest for attemptAuthentication...");
             LoginUserRequestModel creds = new ObjectMapper().readValue(request.getInputStream(), LoginUserRequestModel.class);
 
             // getAuthenticationManager().authenticate comes from spring security
             // if this call is successful, Spring framework will call another method which we will override it too.
             return getAuthenticationManager().authenticate(
-                    new UsernamePasswordAuthenticationToken(creds.getEmail(), creds.getPassword(), new ArrayList<>())
+                    new UsernamePasswordAuthenticationToken(
+                            creds.getEmail(),
+                            creds.getPassword(),
+                            new ArrayList<>())
             );
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -87,6 +95,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
                                             Authentication authResult) throws IOException, ServletException {
         // take a user detail and generate a gwt token
         String userName = ((User)authResult.getPrincipal()).getUsername();
+        logger.info("successfulAuthentication => userName: {}",userName);
         UserDto userDetails = usersService.getUserDetailsByEmail(userName);
 
         // generate GWT token

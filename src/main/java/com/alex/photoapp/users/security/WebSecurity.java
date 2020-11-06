@@ -83,6 +83,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         // here we can create a custom URL pass to login user Authentication URL
         // as parameter we can provide a custom url pass specified in application.properties file
         // this is useful when we don't want to have a default URL pass but a custom one.
+        // !Attention => URI in this property should match URI in properties file for Gateway server!
+        logger.info("WebSecurity login.url.path: {}", environment.getProperty("login.url.path"));
         authenticationFilter.setFilterProcessesUrl(environment.getProperty("login.url.path"));
 
         return authenticationFilter;

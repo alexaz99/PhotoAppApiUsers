@@ -5,7 +5,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
- * Use annotation to do validation instead of programically
+ * Use annotation to do validation instead of programmatically
  */
 public class CreateUserRequestModel {
 

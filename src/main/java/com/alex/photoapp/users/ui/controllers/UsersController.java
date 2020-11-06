@@ -44,7 +44,7 @@ public class UsersController {
      */
     @GetMapping("/status/check")
     public String status() {
-        return "working on port " + env.getProperty("local.server.port");
+        return "working on port " + env.getProperty("local.server.port") + ", with token = " + env.getProperty("token.secret") + ", MqRabbitBus = " + env.getProperty("alex.test.mq.communication");
     }
 
     /**
