@@ -66,7 +66,9 @@ public class UsersServiceImpl implements  UsersService {
 
         UserEntity userEntity = modelMapper.map(userDetails, UserEntity.class);
 
+        logger.info("Before insert/update user: {}", userEntity);
         usersRepository.save(userEntity);
+        logger.info("After insert/update user successfully.");
 
         // create UserDto copy data using mapper and return to the controller
         UserDto userDto = modelMapper.map(userEntity, UserDto.class);

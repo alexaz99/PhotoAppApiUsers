@@ -74,7 +74,7 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-actuator</artifactId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
         <!-- End for Spring Cloud Bus & Actuator Dependencies -->
 
@@ -108,6 +108,15 @@
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
         </dependency>
+
+        <!-- msql dependency. Remove the version, so Spting boot will manage the version-->
+        <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <!--<version>8.0.22</version>-->
+        </dependency>
+
 
     </dependencies>
 
